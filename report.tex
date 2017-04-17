@@ -199,41 +199,46 @@ The curve-fitting algorithm calculated the modeling function's frequency term, $
 
 \FloatBarrier
 
-\begin{tabular}{lll} 
-        \toprule
-		Mass (kg) & Angular Frequency & Spring Constant \\
-                    & ($\omega$) & ($k$) \\ 
-        \midrule 
-		0.01 & 10.3310 & 1.0673 \\ 
-		& 10.295266 & 1.059925 \\
-		0.02 & 9.7465 & 1.8999 \\ 
-		& 9.730597 & 1.893690 \\
-		0.05 & 8.3888 & 3.5186 \\ 
-		& 8.367833 & 3.501032 \\
-		0.10 & 6.9505 & 4.8309 \\ 
-		& 6.953125 & 4.834595 \\
-		0.20 & 5.4843 & 6.0154 \\ 
-		& 5.562774 & 6.188890 \\
-		0.30 & 4.7049 & 6.6407 \\ 
-		& 4.709160 & 6.652855 \\
-		0.40 & 4.1710 & 6.9590 \\ 
-		& 4.167170 & 6.946121 \\
-		0.50 & 3.7790 & 7.1403 \\ 
-		& 3.783115 & 7.155981 \\
-		0.60 & 3.4844 & 7.2847 \\ 
-		& 3.482183 & 7.275358 \\
-		0.70 & 3.2472 & 7.3812 \\ 
-		& 3.246760 & 7.379013 \\
-		0.80 & 3.0472 & 7.4283 \\ 
-		& 3.057934 & 7.480769 \\
-		0.90 & 2.8813 & 7.4715 \\ 
-		& 2.885437 & 7.493171 \\
-		1.00 & 2.7425 & 7.5215 \\ 
-		& 2.741550 & 7.516096 \\
-		1.10 & 2.7199 & 8.1374 \\ 
-		& 2.588541 & 7.370601 \\ 
-        \bottomrule
-\end{tabular} 
+\begin{figure}[!hbp] 
+    \centering
+    \begin{tabular}{lll} 
+            \toprule
+            Mass (kg) & Angular Frequency & Spring Constant \\
+                        & ($\omega$) & ($k$) \\ 
+            \midrule 
+            0.01 & 10.3310 & 1.0673 \\ 
+            & 10.295266 & 1.059925 \\
+            0.02 & 9.7465 & 1.8999 \\ 
+            & 9.730597 & 1.893690 \\
+            0.05 & 8.3888 & 3.5186 \\ 
+            & 8.367833 & 3.501032 \\
+            0.10 & 6.9505 & 4.8309 \\ 
+            & 6.953125 & 4.834595 \\
+            0.20 & 5.4843 & 6.0154 \\ 
+            & 5.562774 & 6.188890 \\
+            0.30 & 4.7049 & 6.6407 \\ 
+            & 4.709160 & 6.652855 \\
+            0.40 & 4.1710 & 6.9590 \\ 
+            & 4.167170 & 6.946121 \\
+            0.50 & 3.7790 & 7.1403 \\ 
+            & 3.783115 & 7.155981 \\
+            0.60 & 3.4844 & 7.2847 \\ 
+            & 3.482183 & 7.275358 \\
+            0.70 & 3.2472 & 7.3812 \\ 
+            & 3.246760 & 7.379013 \\
+            0.80 & 3.0472 & 7.4283 \\ 
+            & 3.057934 & 7.480769 \\
+            0.90 & 2.8813 & 7.4715 \\ 
+            & 2.885437 & 7.493171 \\
+            1.00 & 2.7425 & 7.5215 \\ 
+            & 2.741550 & 7.516096 \\
+            1.10 & 2.7199 & 8.1374 \\ 
+            & 2.588541 & 7.370601 \\ 
+            \bottomrule
+    \end{tabular} 
+    \caption{Calculated results} 
+    \label{results} 
+\end{figure}
 
 \begin{figure}[!hbp]
     \centering
@@ -242,9 +247,17 @@ The curve-fitting algorithm calculated the modeling function's frequency term, $
     \label{mkplot}
 \end{figure} 
 
+\subsection{Limitations and Improvements} 
+
+With the trials performed with small masses, the frequency of the spring's oscillations were near the sampling frequency of the motion detector.  With fewer data points at each cycle of the oscillation, it is more difficult to accurately fit the motion to a curve.  Similarly, with the low frequency of oscillations in the trials with large masses, it was only possible to observe one complete cycle of the spring's motion.  Observing the motion for a longer period would improve the quality of the fit.  If it were possible to use a motion detector with a higher sampling rate, the fit of the earlier trials with lesser masses would be improved. 
+
+With a few of the trials, particularly those with the greatest masses, there was no room to suspend the mass above the minimum range of the motion detector, causing the observed wave form to be clipped as it approached the motion detector.  This created in regions in the data that needed to be filtered and led to a poorer fit to the curve.  Similarly, this lack of vertical laboratory space put an upper limit on the masses we were able to use in the experiment.
+
+The quality of the results would be much improved if the data reduction algorithm were extended to use the least-square residuals to estimate uncertainty.  This is certainly technically possible but we beyond the expertise of the group's programmer.
+
 \FloatBarrier 
 
-\subsection{Interpretation} 
+\section{Interpretation} 
 
 As can be observed in Figure~\ref{mkplot}, the calculated spring force constant is relatively consistent for masses between 200 g and 1 kg.  At smaller masses, the calculated spring force constant deviates considerably from the other values and appears to increase at a logarithmic rate.  There is also variance with masses above 1 kg, but as it was difficult to accurately record the displacement with those masses, this may reflect the limitations of the experimental setup.
 

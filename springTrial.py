@@ -27,7 +27,7 @@ class SpringTrial:
         self.data_filtered = self.data[self.data["Position"] > 0.19]
         self.p0 = list(self.get_p0())
         self.p1, success = opt.leastsq(SpringTrial.errfunc, self.p0, (self.data_filtered["Time"], self.data_filtered["Position"]))        
-        self.k = (self.p1[1] ** 2) * self.mass
+        self.k = (self.p1[1] ** 2) * (self.mass + 0.00123)
         
     def get_p0(self): 
         mean = self.data["Position"].describe()["mean"] 

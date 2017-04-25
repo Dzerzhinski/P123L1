@@ -34,6 +34,8 @@ As seen previously in physics class, the force exerted by an ideal spring is mod
 
 In order to recognize how regularly the spring conforms to the model of the ideal spring, we observe and compare how the spring oscillates over a range of forces and displacements.  By suspending weights of varying mass from the spring and displacing those weights, we create an oscillation that can be measured and allow the spring force constant to be calculated.  In an ideal spring, the spring-force constant would be constant.  Observing a variation in this value would indicate conditions where the spring deviates from the ideal modeled by Hooke's Law.
 
+
+
 \subsection{Method} 
 
 \begin{figure}[!hbp]
@@ -95,11 +97,16 @@ Per Hooke's Law, the position can be represented as a function of time as a solu
 \begin{equation} 
 	m \od[2]{x}{t} = -kx 
 \end{equation} 
-where $x$ is the position of the spring, $t$ is time, $m$ is the mass on the spring, and $k$ is the spring force constant.  It can be seen that $x = A \cos \left( \omega t \right)$ is a solution to this equation, where $\omega^2 = \frac{k}{m}$.  This implies that the frequency of the spring oscillations is a function of the mass and spring force constant, and can easily be obtained by modeling the spring's motion as a sinusoidal function.
+where $x$ is the position of the spring, $t$ is time, $m$ is the mass on the spring, and $k$ is the spring force constant.  It can be seen that 
+\begin{equation}
+\protect\label{fiteqn}
+x = A \cos \left( \omega t + \phi \right)
+\end{equation} 
+is a solution to this equation, where $\omega^2 = \frac{k}{m}$.  This implies that the frequency of the spring oscillations is a function of the mass and spring force constant, and can easily be obtained by modeling the spring's motion as a sinusoidal function.
 
-It would be difficult to calculate frequency of the spring oscillations directly, as the sampling rate of the motion detector was relatively low, but could be interpolated using the model.  The data was fit to a cosine function by least-squares fitting with a Python script.
+It would be difficult to calculate frequency of the spring oscillations directly, as the sampling rate of the motion detector was relatively low, but could be interpolated using the model.  The data was fit to a cosine function, Equation~\ref{fiteqn}, by least-squares fitting with a Python script.
 
-The data for each trial, as exported by the Labview software, was fir to a cosine function using the SciPy.optimize package's leastsq method.  This implements the Levenberg-Marquardt algorithm.  The initial paramters were estimated by reviewing the data.  Iterating over the data points, the local peaks were identified (as local maxima above the mean) and frequency was estimated to be the mean of the distances between them.  Amplitude was estimated to be half the distance between minimum and maximum position values.  Phase off-set was guessed from the time of the first local maximum in position, and the position off-set was taken from the mean of all position values.  For some trials, the bottom of the mass was within the minimum range of the motion detector and yielded a position value near that boundary of range.  It was thus necessary to filter out position values in that region.
+The data for each trial, as exported by the Labview software, was fit to a cosine function using the SciPy.optimize package's leastsq method.  This implements the Levenberg-Marquardt algorithm.  The initial paramters were estimated by reviewing the data.  Iterating over the data points, the local peaks were identified (as local maxima above the mean) and frequency was estimated to be the mean of the distances between them.  Amplitude was estimated to be half the distance between minimum and maximum position values.  Phase off-set was guessed from the time of the first local maximum in position, and the position off-set was taken from the mean of all position values.  For some trials, the bottom of the mass was within the minimum range of the motion detector and yielded a position value near that boundary of range.  It was thus necessary to filter out position values in that region.
 
 The curve-fitting algorithm calculated the modeling function's frequency term, $\omega$.  As stated above, Hooke's Law would imply that the spring force constant $k$ can be expressed $k = m \omega^2$.  Thus, the spring force constant could quickly be calculated from the results of the curve fitting algorithm.
 
@@ -215,7 +222,7 @@ The curve-fitting algorithm calculated the modeling function's frequency term, $
 \begin{figure}[!hbp]
     \centering
     \includegraphics[width=\textwidth]{{data/mass1.10kg}.png}
-    \caption{Mass 1.10 kg, Position-Time}
+    \caption{Mass 1.10 kg, Position-Time.  See~\protect\ref{limits} for a discussion of the clipping artifacts.}
     \label{1.10kgplot}
 \end{figure}
 
@@ -270,10 +277,11 @@ The curve-fitting algorithm calculated the modeling function's frequency term, $
 \end{figure} 
 
 \subsection{Limitations and Improvements} 
+\label{limits}
 
 With the trials performed with small masses, the frequency of the spring's oscillations were near the sampling frequency of the motion detector.  With fewer data points at each cycle of the oscillation, it is more difficult to accurately fit the motion to a curve.  Similarly, with the low frequency of oscillations in the trials with large masses, it was only possible to observe one complete cycle of the spring's motion.  Observing the motion for a longer period would improve the quality of the fit.  If it were possible to use a motion detector with a higher sampling rate, the fit of the earlier trials with lesser masses would be improved. 
 
-With a few of the trials, particularly those with the greatest masses, there was no room to suspend the mass above the minimum range of the motion detector, causing the observed wave form to be clipped as it approached the motion detector.  This can be seen in Figure~\ref{1.10kgplot}.  This created in regions in the data that needed to be filtered and led to a poorer fit to the curve.  Similarly, this lack of vertical laboratory space put an upper limit on the masses we were able to use in the experiment.
+With a few of the trials, particularly those with the greatest masses, there was no room to suspend the mass above the minimum range of the motion detector, causing the observed wave form to be clipped as it approached the motion detector.  This can be seen in Figure~\ref{{1.10kgplot}}.  This created in regions in the data that needed to be filtered and led to a poorer fit to the curve.  Similarly, this lack of vertical laboratory space put an upper limit on the masses we were able to use in the experiment.
 
 The quality of the results would be much improved if the data reduction algorithm were extended to use the least-square residuals to estimate uncertainty.  This is certainly technically possible but we beyond the expertise of the group's programmer.
 
@@ -287,6 +295,12 @@ The spring proved to be very stiff and resilient.  It is possible that with smal
 
 The spring was expected to break down with the greatest masses, but it was much more resislient than expected and was relatively consistent at the largest displacements we were able to observe.  The spring behaves very near the ideal model for the greatest displacements that were pracitically achieved in the laboratory conditions.
 
-There did appear to be some observable inconsistency in the spring force constant with masses in the range of 200 g and 1 kg.  With additional data points it may be possible to perform a statistical regression and develop a more precise model of the spring force constant as it varies with displacement.
+There did appear to be some observable inconsistency in the spring force constant with masses in the range of 200 g and 1 kg.  With additional data points it may be possible to perform a statistical regression and develop a more precise model of the spring force constant as it varies with displacement. 
+
+
+\subsection{Real Life Phenomena} 
+
+Springs are present daily in a lot of things like vehicles and the spring constant $k$ determines how well your car can handle the road. The more weight you add to a vehicle or the farther it falls tests the spring to its limits, the spring can be ruined and no longer hold the desired $k$ constant.  For example, the inconsistency in figure~\ref{1.10kgplot}, the spring reached its limit and caused the position to be different from best fit line like all the other graphs.
+
 
 \end{document} 
